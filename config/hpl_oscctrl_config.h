@@ -282,7 +282,7 @@
 // <i> Indicates whether USB Clock Recovery Mode is enabled or not
 // <id> dfll_arch_usbcrm
 #ifndef CONF_DFLL_USBCRM
-#define CONF_DFLL_USBCRM 0
+#define CONF_DFLL_USBCRM 1
 #endif
 
 // <q> Wait Lock
@@ -350,7 +350,7 @@
 // <o> DFLL Multiply Factor <0x0-0xFFFF>
 //  <id> dfll_mul
 #ifndef CONF_DFLL_MUL
-#define CONF_DFLL_MUL 0x1
+#define CONF_DFLL_MUL 0x0
 #endif
 
 // <e> DFLL Calibration Overwrite
@@ -382,7 +382,7 @@
 // <i> Indicates whether configuration for FDPLL0 is enabled or not
 // <id> enable_fdpll0
 #ifndef CONF_FDPLL0_CONFIG
-#define CONF_FDPLL0_CONFIG 0
+#define CONF_FDPLL0_CONFIG 1
 #endif
 
 // <y> Reference Clock Source
@@ -404,7 +404,7 @@
 // <i> Select the clock source.
 // <id> fdpll0_ref_clock
 #ifndef CONF_FDPLL0_GCLK
-#define CONF_FDPLL0_GCLK GCLK_PCHCTRL_GEN_GCLK3_Val
+#define CONF_FDPLL0_GCLK GCLK_PCHCTRL_GEN_GCLK5_Val
 #endif
 
 // <h> Digital Phase Locked Loop Control
@@ -412,7 +412,7 @@
 // <i> Indicates whether Digital Phase Locked Loop is enabled or not
 // <id> fdpll0_arch_enable
 #ifndef CONF_FDPLL0_ENABLE
-#define CONF_FDPLL0_ENABLE 0
+#define CONF_FDPLL0_ENABLE 1
 #endif
 
 // <q> On Demand Control
@@ -432,19 +432,19 @@
 // <o> Loop Divider Ratio Fractional Part <0x0-0x1F>
 // <id> fdpll0_ldrfrac
 #ifndef CONF_FDPLL0_LDRFRAC
-#define CONF_FDPLL0_LDRFRAC 0xd
+#define CONF_FDPLL0_LDRFRAC 0x0
 #endif
 
 // <o> Loop Divider Ratio Integer Part <0x0-0x1FFF>
 // <id> fdpll0_ldr
 #ifndef CONF_FDPLL0_LDR
-#define CONF_FDPLL0_LDR 0x5b7
+#define CONF_FDPLL0_LDR 0x3b
 #endif
 
 // <o> Clock Divider <0x0-0x7FF>
 // <id> fdpll0_clock_div
 #ifndef CONF_FDPLL0_DIV
-#define CONF_FDPLL0_DIV 0x1
+#define CONF_FDPLL0_DIV 0x0
 #endif
 
 // <q> DCO Filter Enable
@@ -485,7 +485,7 @@
 // <0x3=>XOSC1 clock reference
 // <id> fdpll0_arch_refclk
 #ifndef CONF_FDPLL0_REFCLK
-#define CONF_FDPLL0_REFCLK 0x1
+#define CONF_FDPLL0_REFCLK 0x0
 #endif
 
 // <q> Wake Up Fast

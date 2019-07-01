@@ -42,10 +42,11 @@
 #include <hal_cache.h>
 
 /* Referenced GCLKs (out of 0~11), should be initialized firstly
+ * - GCLK 5 for FDPLL0
  */
-#define _GCLK_INIT_1ST 0x00000000
+#define _GCLK_INIT_1ST 0x00000020
 /* Not referenced GCLKs, initialized last */
-#define _GCLK_INIT_LAST 0x00000FFF
+#define _GCLK_INIT_LAST 0x00000FDF
 
 /**
  * \brief Initialize the hardware abstraction layer

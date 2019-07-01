@@ -27,7 +27,7 @@ void system_init(void)
 	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
-	                   false);
+	                   true);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(D13, GPIO_DIRECTION_OUT);

@@ -1,10 +1,8 @@
 #include <atmel_start.h>
 
-
 int main(void)
 {
     
-    int i;
     /* Initializes MCU, drivers and middleware */
     atmel_start_init();
 

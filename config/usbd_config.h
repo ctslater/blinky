@@ -199,7 +199,7 @@
 // <e> CDC ACM Support
 // <id> usb_composite_cdc_acm_support
 #ifndef CONF_USB_COMPOSITE_CDC_ACM_EN
-#define CONF_USB_COMPOSITE_CDC_ACM_EN 0
+#define CONF_USB_COMPOSITE_CDC_ACM_EN 1
 #endif
 
 // <o> CDC ACM Comm Interrupt IN Endpoint Address

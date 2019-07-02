@@ -104,7 +104,7 @@ middlewares:
       usb_composite_cdc_acm_data_bulkin_epaddr: EndpointAddress = 0x81
       usb_composite_cdc_acm_data_bulkout_epaddr: EndpointAddress = 0x01
       usb_composite_cdc_acm_epaddr: EndpointAddress = 0x82
-      usb_composite_cdc_acm_support: false
+      usb_composite_cdc_acm_support: true
       usb_composite_hid_generic_intin_epaddr: EndpointAddress = 0x85
       usb_composite_hid_generic_intin_maxpksz: 64 bytes
       usb_composite_hid_generic_intout_epaddr: EndpointAddress = 0x03

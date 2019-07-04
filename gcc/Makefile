@@ -54,7 +54,10 @@ hpl/dac \
 hpl/sercom \
 hpl/nvmctrl \
 hpl/core \
-usb/class/msc/device
+usb/class/msc/device \
+FreeRTOS/Source \
+FreeRTOS/Source/portable/GCC/ARM_CM4F \
+FreeRTOS/Source/portable/MemMang
 
 # List the object files
 OBJS +=  \
@@ -114,7 +117,14 @@ atmel_start.o \
 usb/device/usbdc.o \
 hpl/tc/hpl_tc.o \
 hpl/cmcc/hpl_cmcc.o \
-hpl/adc/hpl_adc.o
+hpl/adc/hpl_adc.o \
+FreeRTOS/Source/queue.o \
+FreeRTOS/Source/tasks.o \
+FreeRTOS/Source/list.o \
+FreeRTOS/Source/timers.o \
+FreeRTOS/Source/portable/MemMang/heap_1.o \
+FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+
 
 OBJS_AS_ARGS +=  \
 "hal/src/hal_io.o" \
@@ -173,7 +183,13 @@ OBJS_AS_ARGS +=  \
 "usb/device/usbdc.o" \
 "hpl/tc/hpl_tc.o" \
 "hpl/cmcc/hpl_cmcc.o" \
-"hpl/adc/hpl_adc.o"
+"hpl/adc/hpl_adc.o" \
+"FreeRTOS/Source/queue.o" \
+"FreeRTOS/Source/tasks.o" \
+"FreeRTOS/Source/list.o" \
+"FreeRTOS/Source/timers.o" \
+"FreeRTOS/Source/portable/MemMang/heap_1.o" \
+"FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o"
 
 # List the dependency files
 DEPS := $(OBJS:%.o=%.d)
@@ -237,7 +253,7 @@ DEPS_AS_ARGS +=  \
 "samd51a/gcc/gcc/startup_samd51.d" \
 "atmel_start.d"
 
-OUTPUT_FILE_NAME :=AtmelStart
+OUTPUT_FILE_NAME :=Blinky
 QUOTE := "
 OUTPUT_FILE_PATH +=$(OUTPUT_FILE_NAME).elf
 OUTPUT_FILE_PATH_AS_ARGS +=$(OUTPUT_FILE_NAME).elf
@@ -282,7 +298,7 @@ $(OUTPUT_FILE_PATH): $(OBJS)
 	@echo ARM/GNU C Compiler
 	$(QUOTE)arm-none-eabi-gcc$(QUOTE) -x c -mthumb -DDEBUG -Os -ffunction-sections -mlong-calls -g3 -Wall -c -std=gnu99 \
 -D__SAMD51G19A__ -mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 \
--I"../" -I"../config" -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/adc" -I"../hpl/cmcc" -I"../hpl/core" -I"../hpl/dac" -I"../hpl/dmac" -I"../hpl/evsys" -I"../hpl/gclk" -I"../hpl/mclk" -I"../hpl/nvmctrl" -I"../hpl/osc32kctrl" -I"../hpl/oscctrl" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/ramecc" -I"../hpl/rtc" -I"../hpl/sercom" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/trng" -I"../hpl/usb" -I"../hri" -I"../" -I"../config" -I"../usb" -I"../usb/class/cdc" -I"../usb/class/cdc/device" -I"../usb/class/composite/device" -I"../usb/class/hid" -I"../usb/class/hid/device" -I"../usb/class/hub" -I"../usb/class/msc" -I"../usb/class/msc/device" -I"../usb/class/vendor" -I"../usb/device" -I"../" -I"../CMSIS/Core/Include" -I"../samd51a/include"  \
+-I"../" -I"../config" -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/adc" -I"../hpl/cmcc" -I"../hpl/core" -I"../hpl/dac" -I"../hpl/dmac" -I"../hpl/evsys" -I"../hpl/gclk" -I"../hpl/mclk" -I"../hpl/nvmctrl" -I"../hpl/osc32kctrl" -I"../hpl/oscctrl" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/ramecc" -I"../hpl/rtc" -I"../hpl/sercom" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/trng" -I"../hpl/usb" -I"../hri" -I"../" -I"../config" -I"../usb" -I"../usb/class/cdc" -I"../usb/class/cdc/device" -I"../usb/class/composite/device" -I"../usb/class/hid" -I"../usb/class/hid/device" -I"../usb/class/hub" -I"../usb/class/msc" -I"../usb/class/msc/device" -I"../usb/class/vendor" -I"../usb/device" -I"../" -I"../CMSIS/Core/Include" -I"../samd51a/include"  -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source/portable/GCC/ARM_CM4F" \
 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -o "$@" "$<"
 	@echo Finished building: $<
 
@@ -291,7 +307,7 @@ $(OUTPUT_FILE_PATH): $(OBJS)
 	@echo ARM/GNU Assembler
 	$(QUOTE)arm-none-eabi-as$(QUOTE) -x c -mthumb -DDEBUG -Os -ffunction-sections -mlong-calls -g3 -Wall -c -std=gnu99 \
 -D__SAMD51G19A__ -mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 \
--I"../" -I"../config" -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/adc" -I"../hpl/cmcc" -I"../hpl/core" -I"../hpl/dac" -I"../hpl/dmac" -I"../hpl/evsys" -I"../hpl/gclk" -I"../hpl/mclk" -I"../hpl/nvmctrl" -I"../hpl/osc32kctrl" -I"../hpl/oscctrl" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/ramecc" -I"../hpl/rtc" -I"../hpl/sercom" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/trng" -I"../hpl/usb" -I"../hri" -I"../" -I"../config" -I"../usb" -I"../usb/class/cdc" -I"../usb/class/cdc/device" -I"../usb/class/composite/device" -I"../usb/class/hid" -I"../usb/class/hid/device" -I"../usb/class/hub" -I"../usb/class/msc" -I"../usb/class/msc/device" -I"../usb/class/vendor" -I"../usb/device" -I"../" -I"../CMSIS/Core/Include" -I"../samd51a/include"  \
+-I"../" -I"../config" -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/adc" -I"../hpl/cmcc" -I"../hpl/core" -I"../hpl/dac" -I"../hpl/dmac" -I"../hpl/evsys" -I"../hpl/gclk" -I"../hpl/mclk" -I"../hpl/nvmctrl" -I"../hpl/osc32kctrl" -I"../hpl/oscctrl" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/ramecc" -I"../hpl/rtc" -I"../hpl/sercom" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/trng" -I"../hpl/usb" -I"../hri" -I"../" -I"../config" -I"../usb" -I"../usb/class/cdc" -I"../usb/class/cdc/device" -I"../usb/class/composite/device" -I"../usb/class/hid" -I"../usb/class/hid/device" -I"../usb/class/hub" -I"../usb/class/msc" -I"../usb/class/msc/device" -I"../usb/class/vendor" -I"../usb/device" -I"../" -I"../CMSIS/Core/Include" -I"../samd51a/include"  -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source/portable/GCC/ARM_CM4F" \
 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -o "$@" "$<"
 	@echo Finished building: $<
 
@@ -300,7 +316,7 @@ $(OUTPUT_FILE_PATH): $(OBJS)
 	@echo ARM/GNU Preprocessing Assembler
 	$(QUOTE)arm-none-eabi-gcc$(QUOTE) -x c -mthumb -DDEBUG -Os -ffunction-sections -mlong-calls -g3 -Wall -c -std=gnu99 \
 -D__SAMD51G19A__ -mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 \
--I"../" -I"../config" -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/adc" -I"../hpl/cmcc" -I"../hpl/core" -I"../hpl/dac" -I"../hpl/dmac" -I"../hpl/evsys" -I"../hpl/gclk" -I"../hpl/mclk" -I"../hpl/nvmctrl" -I"../hpl/osc32kctrl" -I"../hpl/oscctrl" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/ramecc" -I"../hpl/rtc" -I"../hpl/sercom" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/trng" -I"../hpl/usb" -I"../hri" -I"../" -I"../config" -I"../usb" -I"../usb/class/cdc" -I"../usb/class/cdc/device" -I"../usb/class/composite/device" -I"../usb/class/hid" -I"../usb/class/hid/device" -I"../usb/class/hub" -I"../usb/class/msc" -I"../usb/class/msc/device" -I"../usb/class/vendor" -I"../usb/device" -I"../" -I"../CMSIS/Core/Include" -I"../samd51a/include"  \
+-I"../" -I"../config" -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/adc" -I"../hpl/cmcc" -I"../hpl/core" -I"../hpl/dac" -I"../hpl/dmac" -I"../hpl/evsys" -I"../hpl/gclk" -I"../hpl/mclk" -I"../hpl/nvmctrl" -I"../hpl/osc32kctrl" -I"../hpl/oscctrl" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/ramecc" -I"../hpl/rtc" -I"../hpl/sercom" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/trng" -I"../hpl/usb" -I"../hri" -I"../" -I"../config" -I"../usb" -I"../usb/class/cdc" -I"../usb/class/cdc/device" -I"../usb/class/composite/device" -I"../usb/class/hid" -I"../usb/class/hid/device" -I"../usb/class/hub" -I"../usb/class/msc" -I"../usb/class/msc/device" -I"../usb/class/vendor" -I"../usb/device" -I"../" -I"../CMSIS/Core/Include" -I"../samd51a/include"  -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source/portable/GCC/ARM_CM4F" \
 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -o "$@" "$<"
 	@echo Finished building: $<
 
